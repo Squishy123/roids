@@ -2,11 +2,11 @@ export default class Stage {
     constructor(elem) {
         //set cycle ticks and times
         this.ticks = 0;
-        this.updateFPS = 60;
+        this.updateFPS = 1000;
         this.updateTimeStart = Date.now();
         this.updateDeltaTime = 0;
 
-        this.renderFPS = 60;
+        this.renderFPS = 1000;
         this.renderTimeStart = Date.now();
         this.renderDeltaTime = 0;
 
@@ -34,7 +34,7 @@ export default class Stage {
 
     callUpdateCycles() {
         let timeNow = Date.now();
-        if ((timeNow - this.updateTimeStart) > this.updateFPS) {
+        if ((timeNow - this.updateTimeStart) > 1000/this.updateFPS) {
             this.updateDeltaTime = timeNow - this.updateTimeStart;
             this.updateCycles(this.updateDeltaTime);
             this.updateTimeStart = Date.now();
@@ -44,7 +44,7 @@ export default class Stage {
     
     callRenderCycles() {
         let timeNow = Date.now();
-        if ((timeNow - this.renderTimeStart) > this.renderFPS) {
+        if ((timeNow - this.renderTimeStart) > 1000/this.renderFPS) {
             this.renderDeltaTime = timeNow - this.renderTimeStart;
             this.renderCycles(this.renderDeltaTime);
             this.renderTimeStart = Date.now();
@@ -74,7 +74,6 @@ export default class Stage {
     }
 
     updateCycles(deltaTime) {
-        console.log("Updating!")
         //call all update render cycles
         this.children.forEach(function(child) {
             child.update(deltaTime)
