@@ -1,12 +1,13 @@
 import PhysicsActor from '../lib/physicsActor';
+import Player from './player';
 
 export default class Asteroid extends PhysicsActor {
     constructor(ctx, bounds) {
         super(ctx, bounds);
 
         //acceleration
-        this.ax = 0.1 * Math.sin(Math.random() * 100);
-        this.ay = 0.1 * Math.cos(Math.random() * 100);
+        this.ax = 0.01 * Math.sin(Math.random() * 100);
+        this.ay = 0.01 * Math.cos(Math.random() * 100);
 
         this.create();
     }
@@ -27,6 +28,24 @@ export default class Asteroid extends PhysicsActor {
         if (distance > 1000) {
             this.destroy();
         }
+
+        //check collisions
+        let collisions = this.stage.getCollisions(this);
+        collisions.forEach((c) => {
+            if (c instanceof Asteroid) {
+                if (this.width > 50) {
+                    let asteroid = new Asteroid(this.ctx, {
+                        px: this.px,
+                        py: this.py,
+                        width: this.width / 2,
+                        height: this.height / 2
+                    });
+                    this.stage.addActor(asteroid);
+                }
+                this.destroy();
+            }
+            //document.querySelector('body').dispatchEvent('asteroidPlayerCollision');
+        })
     }
 
     render() {
@@ -39,7 +58,7 @@ export default class Asteroid extends PhysicsActor {
 
     destroy() {
         //clear previous
-        this.ctx.clearRect(Math.floor(this.px)-1, Math.floor(this.py)-1, this.width + 1, this.height + 1);
+        this.ctx.clearRect(Math.floor(this.px)-1, Math.floor(this.py)-1, this.width + this.ctx.lineWidth, this.height +  this.ctx.lineWidth);
         this.stage.removeActor(this);
     }
 }

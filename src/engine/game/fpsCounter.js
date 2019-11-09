@@ -17,8 +17,7 @@ export default class FPSCounter extends Actor {
             this.storUpdateFPS=this.updateFPS;
             this.updateFPS=0;
         }
-        this.ctx.fillStyle = "black";
-        this.ctx.fillRect(0, 0, 300, 40)
+        this.ctx.clearRect(0, 0, 300, 40)
 
         this.ctx.fillStyle = "#00bcd4";
         this.ctx.font = "30px Arial";
@@ -33,13 +32,11 @@ export default class FPSCounter extends Actor {
             this.storRenderFPS=this.renderFPS;
             this.renderFPS=0;
         }
-        this.ctx.fillStyle = "black";
-        this.ctx.fillRect(0, 30, 300, 40)
+        this.ctx.clearRect(0, 30, 300, 40)
 
         this.ctx.fillStyle = "#00bcd4";
         this.ctx.font = "30px Arial";
         this.ctx.fillText(`Render FPS: ${(this.storRenderFPS)}`, 30, 60)
-
         this.renderFPS+=1;
     }
 }

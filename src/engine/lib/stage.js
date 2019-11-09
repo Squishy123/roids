@@ -32,6 +32,30 @@ export default class Stage {
         this.create();
     }
 
+    getCollisions(actor) {
+        let collisions=[];
+        let obj = this;
+
+        let keys = Object.keys(this.children);
+        //call all children render cycles
+        keys.forEach(function (layer) {
+            obj.children[layer].forEach(function (child) {
+                if(obj.checkCollision(child, actor) && child !== actor) {
+                    collisions.push(child);
+                }
+            });
+        });
+        return collisions;
+    }
+
+    //only works with physicsActors
+    checkCollision(actorA, actorB) {
+        return (actorA.px < actorB.px + actorB.width &&
+            actorA.px + actorA.width > actorB.px &&
+            actorA.py < actorB.py + actorB.height &&
+            actorA.py + actorA.height > actorB.py)
+    }
+
     addActor(actor, zIndex) {
         if (!zIndex)
             zIndex = 0;
@@ -108,7 +132,7 @@ export default class Stage {
     updateCycles(deltaTime) {
         this.update();
         let obj = this;
-        
+
         let keys = Object.keys(this.children);
         keys.sort((a, b) => a - b);
         //call all children render cycles
