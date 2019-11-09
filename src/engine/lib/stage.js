@@ -2,11 +2,11 @@ export default class Stage {
     constructor(elem) {
         //set cycle ticks and times
         this.ticks = 0;
-        this.updateFPS = 60;
+        this.updateFPS = 100;
         this.updateTimeStart = Date.now();
         this.updateDeltaTime = 0;
 
-        this.renderFPS = 144;
+        this.renderFPS = 200;
         this.renderTimeStart = Date.now();
         this.renderDeltaTime = 0;
 
