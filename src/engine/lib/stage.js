@@ -19,7 +19,7 @@ export default class Stage {
         this.ctx = this.elem.getContext('2d');
 
         //setup children
-        this.children = [];
+        this.children = {};
 
         //bind functions
         this.start = this.start.bind(this);
@@ -32,19 +32,36 @@ export default class Stage {
         this.create();
     }
 
+    addActor(actor, zIndex) {
+        if (!zIndex)
+            zIndex = 0;
+        actor.stage = this;
+        actor.zIndex = zIndex;
+
+        if (!this.children[zIndex])
+            this.children[zIndex] = [];
+
+        this.children[zIndex].push(actor);
+    }
+
+    removeActor(actor) {
+        let index = this.children[actor.zIndex].findIndex((a) => a === actor);
+        delete this.children[actor.zIndex][index];
+    }
+
     callUpdateCycles() {
         let timeNow = Date.now();
-        if ((timeNow - this.updateTimeStart) > 1000/this.updateFPS) {
+        if ((timeNow - this.updateTimeStart) > 1000 / this.updateFPS) {
             this.updateDeltaTime = timeNow - this.updateTimeStart;
             this.updateCycles(this.updateDeltaTime);
             this.updateTimeStart = Date.now();
         }
         window.requestAnimationFrame(this.callUpdateCycles)
     }
-    
+
     callRenderCycles() {
         let timeNow = Date.now();
-        if ((timeNow - this.renderTimeStart) > 1000/this.renderFPS) {
+        if ((timeNow - this.renderTimeStart) > 1000 / this.renderFPS) {
             this.renderDeltaTime = timeNow - this.renderTimeStart;
             this.renderCycles(this.renderDeltaTime);
             this.renderTimeStart = Date.now();
@@ -66,17 +83,39 @@ export default class Stage {
         window.cancelAnimationFrame(this.callRenderCycles);
     }
 
+    render() {
+
+    }
+
     renderCycles(deltaTime) {
+        this.render();
+        let obj = this;
+
+        let keys = Object.keys(this.children);
+        keys.sort((a, b) => a - b);
         //call all children render cycles
-        this.children.forEach(function(child) {
-            child.render(deltaTime)
+        keys.forEach(function (layer) {
+            obj.children[layer].forEach(function (child) {
+                child.render(deltaTime)
+            });
         });
     }
 
+    update() {
+
+    }
+
     updateCycles(deltaTime) {
-        //call all update render cycles
-        this.children.forEach(function(child) {
-            child.update(deltaTime)
+        this.update();
+        let obj = this;
+        
+        let keys = Object.keys(this.children);
+        keys.sort((a, b) => a - b);
+        //call all children render cycles
+        keys.forEach(function (layer) {
+            obj.children[layer].forEach(function (child) {
+                child.update(deltaTime)
+            });
         });
     }
 }

@@ -18,7 +18,7 @@ export default class Ball extends Actor {
 
         //acceleration
         this.ax = 0;
-        this.ay = 0.01;
+        this.ay = 0.1;
 
         this.create();
     }
@@ -55,8 +55,7 @@ export default class Ball extends Actor {
 
     render() {
         //clear previous
-        this.ctx.fillStyle = "black";
-        this.ctx.fillRect(Math.floor(this.px), Math.floor(this.py), this.width, this.height);
+        this.ctx.clearRect(Math.floor(this.px), Math.floor(this.py), this.width, this.height);
 
         this.px = this.nx;
         this.py = this.ny;
