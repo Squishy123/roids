@@ -46,8 +46,8 @@ export default class Player extends PhysicsActor {
         console.log(event.detail)
     }
 
-    update() {
-        super.update();
+    update(deltaTime) {
+        super.update(deltaTime);
 
         //wrap position
         if (this.px > window.innerWidth) {

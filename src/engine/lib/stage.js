@@ -2,7 +2,7 @@ export default class Stage {
     constructor(elem) {
         //set cycle ticks and times
         this.ticks = 0;
-        this.updateFPS = 100;
+        this.updateFPS = 200;
         this.updateTimeStart = Date.now();
         this.updateDeltaTime = 0;
 
@@ -70,7 +70,8 @@ export default class Stage {
 
     removeActor(actor) {
         let index = this.children[actor.zIndex].findIndex((a) => a === actor);
-        delete this.children[actor.zIndex][index];
+        this.children[actor.zIndex].splice(index, 1);
+        console.log(this.children);
     }
 
     callUpdateCycles() {
@@ -113,16 +114,15 @@ export default class Stage {
 
     renderCycles(deltaTime) {
         this.render();
-        let obj = this;
 
         let keys = Object.keys(this.children);
         keys.sort((a, b) => a - b);
         //call all children render cycles
         keys.forEach(function (layer) {
-            obj.children[layer].forEach(function (child) {
-                child.render(deltaTime)
-            });
-        });
+            this.children[layer].forEach(function (child) {
+                child.render(deltaTime*0.05)
+            }, this, deltaTime);
+        }, this, deltaTime);
     }
 
     update() {
@@ -131,15 +131,15 @@ export default class Stage {
 
     updateCycles(deltaTime) {
         this.update();
-        let obj = this;
 
         let keys = Object.keys(this.children);
         keys.sort((a, b) => a - b);
         //call all children render cycles
         keys.forEach(function (layer) {
-            obj.children[layer].forEach(function (child) {
-                child.update(deltaTime)
-            });
-        });
+            this.children[layer].forEach(function (child) {
+                //console.log(deltaTime);
+                child.update(deltaTime*0.05);
+            }, this, deltaTime);
+        }, this, deltaTime);
     }
 }

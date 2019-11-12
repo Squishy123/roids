@@ -19,8 +19,8 @@ export default class Asteroid extends PhysicsActor {
     }
 
 
-    update() {
-        super.update();
+    update(deltaTime) {
+        super.update(deltaTime);
         //check radius to center
         let xComp = window.innerWidth / 2 - this.px;
         let yComp = window.innerHeight / 2 - this.py;

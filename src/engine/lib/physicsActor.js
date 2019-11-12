@@ -24,6 +24,9 @@ export default class PhysicsActor extends Actor {
         this.ay = bounds.ay | 0;
 
         this.create();
+
+        //bind
+        this.update = this.update.bind(this);
     }
 
     create() {
@@ -32,12 +35,16 @@ export default class PhysicsActor extends Actor {
     }
 
 
-    update() {
+    update(deltaTime) {
+        //console.log(deltaTime);
         //apply physics
-        this.vx += this.ax;
-        this.nx += this.vx;
-        this.vy += this.ay;
-        this.ny += this.vy;
+        let dx=this.vx*deltaTime + 0.5 * this.ax * deltaTime * deltaTime;
+        this.nx += dx;
+        this.vx += this.ax * deltaTime;
+        let dy=this.vy*deltaTime + 0.5 * this.ay * deltaTime * deltaTime;
+        this.ny += dy;
+        this.vy += this.ay * deltaTime;
+        //console.log(deltaTime);
     }
 
     render() {
