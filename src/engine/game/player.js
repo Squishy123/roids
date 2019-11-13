@@ -1,9 +1,12 @@
 import PhysicsActor from '../lib/physicsActor';
 import Particle from './particle';
 import Asteroid from './asteroid';
+import Bullet from './bullet';
 
 const MAX_VX = 10;
 const MAX_VY = 10;
+
+const MAX_FIRERATE = 10;
 
 export default class Player extends PhysicsActor {
     constructor(ctx, bounds, input) {
@@ -14,6 +17,7 @@ export default class Player extends PhysicsActor {
             height: 40,
         });
         this.input = input;
+        this.bulletTime = Date.now();
 
         this.handleAsteroidCollision = this.handleAsteroidCollision.bind(this);
         this.create();
@@ -84,6 +88,14 @@ export default class Player extends PhysicsActor {
             //d
         } else if (this.input.keys()[68]) {
             this.angle += 10;
+        }
+
+        //space
+        if (this.input.keys()[32]) {
+            if(Date.now() - this.bulletTime > 1000/MAX_FIRERATE) {
+                this.stage.addActor(new Bullet(this.ctx, { px: this.px + this.width / 2, py: this.py + this.height / 2, angle: this.angle + 180, ax: this.vx, ay: this.vy }), this.zIndex - 1)
+                this.bulletTime=Date.now();
+            }
         }
 
         //check collisions

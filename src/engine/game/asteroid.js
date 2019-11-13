@@ -1,5 +1,6 @@
 import PhysicsActor from '../lib/physicsActor';
 import Player from './player';
+import Bullet from './bullet';
 
 export default class Asteroid extends PhysicsActor {
     constructor(ctx, bounds) {
@@ -32,7 +33,7 @@ export default class Asteroid extends PhysicsActor {
         //check collisions
         let collisions = this.stage.getCollisions(this);
         collisions.forEach((c) => {
-            if (c instanceof Asteroid) {
+            if (c instanceof Asteroid || c instanceof Bullet) {
                 if (this.width > 10) {
                     let asteroid = new Asteroid(this.ctx, {
                         px: this.px,
