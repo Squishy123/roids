@@ -24,8 +24,8 @@ export default class Bullet extends PhysicsActor {
         this.ctx.fillRect(this.px, this.py, this.width, this.height);
     }
 
-    update() {
-        //super.update();
+    update(deltaTime) {
+        super.update(deltaTime);
         this.vx = -this.ax * Math.sin(this.angle * Math.PI / 180);
         this.vy = this.ay * Math.cos(this.angle * Math.PI / 180);
 
