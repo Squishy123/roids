@@ -33,7 +33,7 @@ export default class Asteroid extends PhysicsActor {
         let collisions = this.stage.getCollisions(this);
         collisions.forEach((c) => {
             if (c instanceof Asteroid) {
-                if (this.width > 50) {
+                if (this.width > 10) {
                     let asteroid = new Asteroid(this.ctx, {
                         px: this.px,
                         py: this.py,

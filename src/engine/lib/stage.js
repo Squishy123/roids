@@ -71,7 +71,6 @@ export default class Stage {
     removeActor(actor) {
         let index = this.children[actor.zIndex].findIndex((a) => a === actor);
         this.children[actor.zIndex].splice(index, 1);
-        console.log(this.children);
     }
 
     callUpdateCycles() {
@@ -114,7 +113,7 @@ export default class Stage {
 
     renderCycles(deltaTime) {
         this.render();
-
+        this.ctx.clearRect(0, 0, this.width, this.height);
         let keys = Object.keys(this.children);
         keys.sort((a, b) => a - b);
         //call all children render cycles
