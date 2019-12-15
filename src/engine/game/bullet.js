@@ -10,8 +10,8 @@ export default class Bullet extends PhysicsActor {
             angle: bounds.angle | 0,
             px: bounds.px - 2.5,
             py: bounds.py - 2.5,
-            ax: Math.abs(bounds.ax) | 5,
-            ay: Math.abs(bounds.ay) | 5
+            ax: 7,
+            ay: 7
         });
 
         this.totalDistance = 0;

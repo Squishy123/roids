@@ -3,8 +3,8 @@ import Particle from './particle';
 import Asteroid from './asteroid';
 import Bullet from './bullet';
 
-const MAX_VX = 10;
-const MAX_VY = 10;
+const MAX_VX = 5;
+const MAX_VY = 5;
 
 const MAX_FIRERATE = 10;
 

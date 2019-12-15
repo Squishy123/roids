@@ -25,6 +25,11 @@ export default class AsteroidStage extends Stage {
         this.inputHandler.startHandler();
         this.addActor(new Player(this.ctx, {}, this.inputHandler), 10);
         //this.children.push(new Ball(this.ctx, {px: 100, py: 100, width: 50, height: 50}))
+    
+
+        //create new scoreboard
+        //this.score = document.createElement('h1');
+        //document.querySelector('body').appendChild(score);
     }
 
     update() {
