@@ -11,7 +11,7 @@
     "webpack-cli": "^3.3.10"
   },
   "devDependencies": {
-    "concurrently": "^5.0.0",
+    "concurrently": "^5.0.1",
     "gh-pages": "^2.1.1",
     "nodemon": "^1.19.4",
     "webpack-dev-server": "^3.9.0"
